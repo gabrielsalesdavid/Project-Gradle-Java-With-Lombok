@@ -1,5 +1,6 @@
 plugins {
-    id 'java'
+    id ("java")
+    checkstyle
 }
 
 group = 'br.com.projectgradlejavawithlombok'
@@ -22,4 +23,15 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:$lombokMapstructBinding")
 
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+}
+
+tasks.withType<Checkstyle>().configureEach {
+    reports{
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.checkstyleMain {
+    source = fileTree("src/main/java")
 }
